@@ -258,8 +258,8 @@ export class Web3Modal extends Web3ModalScaffold {
 
           try {
             EthersStoreUtil.setError(undefined)
-            this.setCoinbaseProvider(ethersConfig)
             await CoinbaseProvider.request({ method: 'eth_requestAccounts' })
+            this.setCoinbaseProvider(ethersConfig)
           } catch (error) {
             EthersStoreUtil.setError(error)
             throw new Error((error as CoinbaseProviderError).message)
@@ -394,7 +394,7 @@ export class Web3Modal extends Web3ModalScaffold {
       this.checkActive6963Provider()
     }
 
-    this.setEIP6963Enabled(ethersConfig.EIP6963 !== false)
+    this.setEIP6963Enabled(ethersConfig.EIP6963)
   }
 
   // -- Public ------------------------------------------------------------------
@@ -646,7 +646,6 @@ export class Web3Modal extends Web3ModalScaffold {
       ConstantsUtil.COINBASE_SDK_CONNECTOR_ID
     )
     const CoinbaseProvider = config.coinbase
-
     if (CoinbaseProvider) {
       const { address, chainId } = await EthersHelpersUtil.getUserInfo(CoinbaseProvider)
       if (address && chainId) {
